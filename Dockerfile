@@ -5,7 +5,7 @@ RUN update-ca-certificates
 RUN curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
 RUN go get -d github.com/influxdata/telegraf
 WORKDIR "/go/src/github.com/influxdata/telegraf"
-RUN git checkout d5df7666d886d0a9d38410f0a46442bd6fed47a3
+RUN git checkout v1.14.0
 RUN go mod download
 COPY all_inputs.go /go/src/github.com/influxdata/telegraf/plugins/inputs/all/all.go
 COPY all_outputs.go /go/src/github.com/influxdata/telegraf/plugins/outputs/all/all.go
