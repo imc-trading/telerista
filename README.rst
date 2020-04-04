@@ -11,9 +11,13 @@ Features
 
 * Designed to run directly on your Arista switch
 * Collects the following data regarding your switch
+
   * Linux system stats (cpu, memory, kernel, etc)
+
   * LANZ records (if configured)
+
   * Openconfig gNMI interface statistics
+
 * Stores data in InfluxDB
 * Configurable global tags added to all measurements
 * Includes sample Grafana dashboards
@@ -75,7 +79,7 @@ Container execution
 ~~~~~~~~~~~~~~~~~~~
 For the container to have access to all the resources needed to read system
 statistics, a long list of container options must be passed to Docker.
-Be sure to set the correct values for your nameserver and environment
+Be sure to set the correct values for your hostname, nameserver, and environment
 variables
 
 .. code-block::
@@ -83,8 +87,8 @@ variables
     EOS#configure terminal
     EOS(config)#container-manager
     EOS(config-container-mgr)#container telerista
-    EOS(config-container-mgr-container-telerista)#image TBD/telerista:latest
-    EOS(config-container-mgr-container-telerista)#options docker run -d --rm --dns=127.0.0.1 --log-opt max-size=1m --log-opt max-file=3 --network=host -e HOSTNAME=${HOSTNAME} -e INFLUX_URL="http://influxdb:8086" -e "HOST_PROC=/rootfs/proc" -e "PROC_ROOT=/rootfs/proc" -e "HOST_SYS=/rootfs/sys" -e "HOST_ETC=/rootfs/etc" -e "HOST_MOUNT_PREFIX=/rootfs" -e TAG_foo=bar -v /sys:/rootfs/sys:ro -v /proc:/rootfs/proc:ro -v /etc:/rootfs/etc:ro
+    EOS(config-container-mgr-container-telerista)#image imctrading/telerista:latest
+    EOS(config-container-mgr-container-telerista)#options --dns=127.0.0.1 --log-opt max-size=1m --log-opt max-file=3 --network=host -e HOSTNAME=EOS -e INFLUX_URL="http://influxdb:8086" -e "HOST_PROC=/rootfs/proc" -e "PROC_ROOT=/rootfs/proc" -e "HOST_SYS=/rootfs/sys" -e "HOST_ETC=/rootfs/etc" -e "HOST_MOUNT_PREFIX=/rootfs" -e TAG_foo=bar -v /sys:/rootfs/sys:ro -v /proc:/rootfs/proc:ro -v /etc:/rootfs/etc:ro
     EOS(config-container-mgr-container-telerista)#on-boot
     EOS(config-container-mgr-container-telerista)#end
 
@@ -99,7 +103,7 @@ The following environment variables can be set:
       - Default
       - Description
     * - ``HOSTNAME``
-      - 
+      -
       - Set the hostname variable inside the container.
     * - ``INFLUX_URL``
       - 
