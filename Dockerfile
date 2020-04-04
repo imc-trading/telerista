@@ -25,6 +25,7 @@ RUN set -eux; \
 EXPOSE 8125/udp 8092/udp 8094
 
 COPY entrypoint.sh /entrypoint.sh
+RUN chmod a+x /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
 ENV GNMI_SERVER=localhost:6030 \
     LANZ_SERVER=localhost:50001 \
